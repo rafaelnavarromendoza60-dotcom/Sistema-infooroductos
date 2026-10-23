@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<!-- Portada de ebook 1600×2560 (proporción 1:1,6). Renderiza con:
+     python scripts/renderizar.py assets/portada-ebook.html portada.png --ancho 1600 --alto 2560
+     Sustituye los textos y ajusta :root. Para usar una fotografía, descomenta .foto. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@500;700&display=swap">
+<style>
+  :root { --primario:#2A1033; --secundario:#4E2260; --acento:#FF5E62; --acento2:#FF9966; --claro:#FFD29A; }
+  * { box-sizing:border-box; margin:0; }
+  html, body { width:1600px; height:2560px; overflow:hidden; }
+  body { background:linear-gradient(160deg,var(--primario) 0%,var(--secundario) 100%); color:#fff; font-family:'Inter',system-ui,sans-serif; position:relative; padding:180px 150px; display:flex; flex-direction:column; }
+  .circulo { position:absolute; right:-260px; top:-260px; width:1100px; height:1100px; border-radius:50%; background:linear-gradient(135deg,var(--acento),var(--acento2)); }
+  .circulo2 { position:absolute; left:-200px; bottom:300px; width:600px; height:600px; border-radius:50%; background:var(--claro); opacity:.25; filter:blur(60px); }
+  /* .foto { position:absolute; inset:0; background:url('foto.jpg') center/cover; opacity:.35; } */
+  .c { position:relative; z-index:1; display:flex; flex-direction:column; height:100%; }
+  .etiqueta { font-size:48px; letter-spacing:.3em; text-transform:uppercase; color:var(--claro); font-weight:700; }
+  h1 { margin-top:auto; font-family:'Fraunces',Georgia,serif; font-weight:900; font-size:300px; line-height:.9; letter-spacing:-.03em; }
+  h1 span { color:var(--acento); }
+  .sub { margin-top:70px; font-size:76px; line-height:1.25; max-width:1150px; opacity:.92; }
+  .linea { width:220px; height:10px; background:var(--claro); margin:110px 0 50px; border-radius:5px; }
+  .autora { font-size:56px; opacity:.8; }
+</style>
+</head>
+<body>
+  <!-- <div class="foto"></div> -->
+  <div class="circulo"></div><div class="circulo2"></div>
+  <div class="c">
+    <span class="etiqueta">[El método]</span>
+    <h1>[GLOW]<span>[FIT]</span></h1>
+    <p class="sub">[Subtítulo con el beneficio principal]</p>
+    <div class="linea"></div>
+    <p class="autora">[Autora o marca]</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "infoproductos",
+  "description": "Sistema de 17 skills para investigar, validar, crear, lanzar, vender y escalar infoproductos en España, Latinoamérica y Estados Unidos.",
+  "version": "1.0.0",
+  "author": {
+    "name": "rafaelnavarromendoza60-dotcom"
+  },
+  "keywords": [
+    "infoproductos",
+    "ebooks",
+    "cursos",
+    "marketing",
+    "meta-ads",
+    "copywriting",
+    "shopify",
+    "hotmart"
+  ],
+  "license": "LicenseRef-Propietaria"
+}

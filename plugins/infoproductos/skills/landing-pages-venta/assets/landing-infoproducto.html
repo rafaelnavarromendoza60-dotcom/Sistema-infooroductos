@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[Producto] · [Beneficio principal]</title>
+<meta name="description" content="[Descripción de 150 caracteres con beneficio y público]">
+<!--
+  Plantilla de página de venta para infoproductos. Archivo único, sin dependencias.
+  1. Sustituye los textos entre [corchetes].
+  2. Sustituye TODOS los href="#ENLACE-DE-PAGO-PENDIENTE" por el enlace real de pago (Shopify, Hotmart, Stripe...).
+     No publiques la página hasta hacerlo: no inventes ni simules enlaces de pago.
+  3. Los testimonios son huecos: usa solo testimonios reales con permiso o elimina la sección.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@400;600;700&display=swap">
+<style>
+  :root {
+    --primario: #2A1033; --acento: #D63A48; --acento-hover: #C22F3E; --fondo: #FFF8F3; --blanco: #FFFFFF;
+    --texto: #2A1033; --texto-suave: #5b4a63; --confianza: #1B7F6B; --confianza-fondo: #DDF5EE; --borde: #eadfe6;
+    --radio: 20px; --ancho: 1100px;
+    --fuente-titulos: 'Fraunces', Georgia, serif; --fuente-texto: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--fondo); color: var(--texto); font: 17px/1.6 var(--fuente-texto); }
+  img { max-width: 100%; height: auto; display: block; }
+  h1, h2, h3 { font-family: var(--fuente-titulos); line-height: 1.1; margin: 0 0 .5em; }
+  h1 { font-size: clamp(2.1rem, 6vw, 3.6rem); font-weight: 900; }
+  h2 { font-size: clamp(1.7rem, 4.5vw, 2.6rem); font-weight: 900; text-align: center; }
+  p { margin: 0 0 1em; }
+  .contenedor { max-width: var(--ancho); margin: 0 auto; padding: 0 20px; }
+  section { padding: 72px 0; }
+  .alterna { background: var(--blanco); }
+  .oscura { background: var(--primario); color: var(--blanco); }
+  .oscura h2 { color: var(--blanco); }
+  .centro { text-align: center; }
+  .estrecho { max-width: 720px; margin: 0 auto; }
+  .eyebrow { font-size: .8rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--acento); }
+
+  /* Botón: mínimo 44 px de alto, contraste AA con texto blanco */
+  .boton { display: inline-block; min-height: 52px; padding: 16px 34px; border-radius: 999px; background: var(--acento); color: var(--blanco); font-weight: 700; font-size: 1.1rem; text-decoration: none; text-align: center; box-shadow: 0 10px 26px -10px rgba(214,58,72,.7); transition: background .2s, transform .2s; }
+  .boton:hover { background: var(--acento-hover); transform: translateY(-1px); }
+  .boton:focus-visible { outline: 3px solid var(--primario); outline-offset: 3px; }
+  .micro { font-size: .88rem; color: var(--texto-suave); margin-top: 12px; }
+  .oscura .micro { color: rgba(255,255,255,.75); }
+
+  /* Hero */
+  .hero { padding: 40px 0 64px; }
+  .hero .rejilla { display: grid; gap: 40px; align-items: center; }
+  .hero p.sub { font-size: 1.15rem; color: var(--texto-suave); }
+  .precio { font-size: 2rem; font-weight: 800; margin: 8px 0 14px; }
+  .precio s { font-size: 1.1rem; font-weight: 400; color: var(--texto-suave); margin-left: 8px; }
+  @media (min-width: 860px) { .hero .rejilla { grid-template-columns: 1.1fr 1fr; } .hero { padding-top: 72px; } }
+
+  /* Tarjetas y listas */
+  .rejilla-tarjetas { display: grid; gap: 16px; margin-top: 32px; }
+  @media (min-width: 700px) { .rejilla-tarjetas { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 980px) { .rejilla-tarjetas.tres { grid-template-columns: repeat(3, 1fr); } }
+  .tarjeta { background: var(--blanco); border: 1px solid var(--borde); border-radius: var(--radio); padding: 24px; }
+  .oscura .tarjeta { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14); }
+  .tarjeta h3 { font-size: 1.2rem; }
+  .check { list-style: none; padding: 0; margin: 0; }
+  .check li { padding: 8px 0 8px 34px; position: relative; }
+  .check li::before { content: "✓"; position: absolute; left: 0; top: 8px; width: 24px; height: 24px; border-radius: 50%; background: var(--confianza-fondo); color: var(--confianza); font-weight: 700; display: grid; place-items: center; font-size: .85rem; }
+  .cruz li::before { content: "✕"; background: #f3e8ee; color: var(--texto-suave); }
+
+  /* Oferta */
+  .oferta { background: var(--blanco); border: 2px solid var(--acento); border-radius: 28px; padding: 32px 24px; max-width: 560px; margin: 32px auto 0; }
+  .oferta .fila { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--borde); }
+  .garantia { display: flex; gap: 20px; align-items: center; background: var(--confianza-fondo); border-radius: var(--radio); padding: 24px; max-width: 760px; margin: 0 auto; }
+  .sello { flex: none; width: 92px; height: 92px; border-radius: 50%; border: 3px dashed var(--confianza); display: grid; place-items: center; font-weight: 800; color: var(--confianza); text-align: center; line-height: 1.1; background: var(--blanco); }
+
+  /* FAQ accesible sin JavaScript */
+  details { background: var(--blanco); border: 1px solid var(--borde); border-radius: 14px; padding: 16px 20px; margin-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--acento); font-size: 1.4rem; line-height: 1; }
+  details[open] summary::after { content: "–"; }
+
+  /* Barra fija en móvil */
+  .barra-movil { position: fixed; left: 0; right: 0; bottom: 0; background: var(--blanco); border-top: 1px solid var(--borde); padding: 10px 16px; display: flex; gap: 12px; align-items: center; z-index: 10; }
+  .barra-movil .boton { flex: 1; min-height: 48px; padding: 12px; font-size: 1rem; }
+  @media (min-width: 860px) { .barra-movil { display: none; } }
+  footer { background: #1A0920; color: rgba(255,255,255,.7); padding: 40px 0 110px; font-size: .88rem; }
+  footer a { color: rgba(255,255,255,.85); }
+  footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 18px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .boton { transition: none; } }
+</style>
+</head>
+<body>
+
+<!-- 1. HERO: qué es, para quién, beneficio, precio y CTA visibles sin hacer scroll en móvil -->
+<header class="hero">
+  <div class="contenedor rejilla">
+    <div>
+      <p class="eyebrow">[Para quién es: p. ej., Para mujeres que entrenan en casa]</p>
+      <h1>[Titular con el resultado principal]</h1>
+      <p class="sub">[Subtítulo: qué es el producto, cómo funciona y qué lo hace distinto, en 1-2 frases.]</p>
+      <ul class="check">
+        <li>[Beneficio concreto 1]</li>
+        <li>[Beneficio concreto 2]</li>
+        <li>[Beneficio concreto 3]</li>
+      </ul>
+      <p class="precio">[19 €] <!-- <s>[precio anterior REAL]</s> --></p>
+      <a class="boton" href="#ENLACE-DE-PAGO-PENDIENTE">[Quiero mi plan →]</a>
+      <p class="micro">🔒 Pago seguro · [Formato] · Acceso inmediato por email · [Garantía de N días, si existe]</p>
+    </div>
+    <img src="mockup.png" width="800" height="600" alt="[Producto] en formato digital, en tableta y móvil">
+  </div>
+</header>
+
+<!-- 2-4. PROBLEMA, IDENTIFICACIÓN Y CONSECUENCIAS -->
+<section class="alterna">
+  <div class="contenedor estrecho">
+    <h2>[¿Te suena alguna de estas situaciones?]</h2>
+    <ul class="check cruz">
+      <li>[Situación 1 en palabras del cliente]</li>
+      <li>[Situación 2]</li>
+      <li>[Situación 3]</li>
+    </ul>
+    <p class="centro" style="margin-top:24px"><strong>[Nueva perspectiva: no es falta de X, es falta de Y.]</strong></p>
+  </div>
+</section>
+
+<!-- 5. SOLUCIÓN Y MÉTODO -->
+<section>
+  <div class="contenedor">
+    <p class="eyebrow centro">El método</p>
+    <h2>[Nombre del método]: [cómo funciona en una frase]</h2>
+    <div class="rejilla-tarjetas tres">
+      <div class="tarjeta"><h3>1. [Paso]</h3><p>[Qué hace y por qué funciona]</p></div>
+      <div class="tarjeta"><h3>2. [Paso]</h3><p>[...]</p></div>
+      <div class="tarjeta"><h3>3. [Paso]</h3><p>[...]</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. QUÉ INCLUYE (entregables concretos) -->
+<section class="oscura" id="incluye">
+  <div class="contenedor">
+    <h2>Qué incluye</h2>
+    <div class="rejilla-tarjetas tres">
+      <div class="tarjeta"><h3>[Módulo o capítulo]</h3><p>[Qué aprenderás o conseguirás]</p></div>
+      <div class="tarjeta"><h3>[...]</h3><p>[...]</p></div>
+      <div class="tarjeta"><h3>[Bono: nombre]</h3><p>[Obstáculo que resuelve]</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIÉN ES / NO ES -->
+<section class="alterna">
+  <div class="contenedor rejilla-tarjetas">
+    <div><h2 style="text-align:left">Es para ti si…</h2><ul class="check"><li>[...]</li><li>[...]</li><li>[...]</li></ul></div>
+    <div><h2 style="text-align:left">No es para ti si…</h2><ul class="check cruz"><li>[...]</li><li>[...]</li></ul></div>
+  </div>
+</section>
+
+<!-- 7. EVIDENCIAS: solo testimonios reales con permiso; si no hay, muestra autora, muestra del contenido y metodología -->
+<section>
+  <div class="contenedor">
+    <h2>[Lo que dicen quienes ya lo usan]</h2>
+    <div class="rejilla-tarjetas tres">
+      <figure class="tarjeta" style="margin:0"><blockquote style="margin:0">“[TESTIMONIO REAL PENDIENTE]”</blockquote><figcaption class="micro">[Nombre, contexto]</figcaption></figure>
+    </div>
+    <div class="tarjeta estrecho" style="margin-top:24px">
+      <h3>Sobre [la autora]</h3>
+      <p>[Credenciales verificables y experiencia relevante.]</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8. OFERTA Y PRECIO -->
+<section class="alterna" id="oferta">
+  <div class="contenedor">
+    <h2>[Empieza hoy]</h2>
+    <div class="oferta">
+      <div class="fila"><span>[Producto principal]</span><span>✓</span></div>
+      <div class="fila"><span>[Bono 1]</span><span>✓</span></div>
+      <div class="fila"><span>[Bono 2]</span><span>✓</span></div>
+      <p class="precio centro" style="margin-top:18px">[19 €] <span class="micro">[IVA incluido / + impuestos según país]</span></p>
+      <a class="boton" style="display:block" href="#ENLACE-DE-PAGO-PENDIENTE">[Conseguir acceso ahora]</a>
+      <p class="micro centro">[Formato y entrega: PDF, acceso inmediato por email] · [Métodos de pago]</p>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTÍA (solo si existe y coincide con la política publicada) -->
+<section>
+  <div class="contenedor">
+    <div class="garantia">
+      <div class="sello">[30]<br>días</div>
+      <div><h3>[Garantía de N días]</h3><p>[Condiciones exactas en lenguaje claro. Enlace a la política de reembolsos.]</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. PREGUNTAS FRECUENTES -->
+<section class="alterna" id="faq">
+  <div class="contenedor estrecho">
+    <h2>Preguntas frecuentes</h2>
+    <details><summary>¿Cómo y cuándo recibo el producto?</summary><p>[Formato, entrega y plazo.]</p></details>
+    <details><summary>¿Es un pago único?</summary><p>[Sí / condiciones de la suscripción.]</p></details>
+    <details><summary>[Objeción principal]</summary><p>[Respuesta.]</p></details>
+    <details><summary>¿Qué pasa si no me sirve?</summary><p>[Política real de reembolso.]</p></details>
+  </div>
+</section>
+
+<!-- 10. CTA FINAL -->
+<section class="oscura centro">
+  <div class="contenedor estrecho">
+    <h2>[Cierre: resultado + invitación]</h2>
+    <a class="boton" href="#ENLACE-DE-PAGO-PENDIENTE">[Quiero empezar]</a>
+    <p class="micro">[Acceso inmediato] · [Garantía]</p>
+  </div>
+</section>
+
+<!-- AVISOS LEGALES: completa con los datos reales del vendedor -->
+<footer>
+  <div class="contenedor">
+    <nav aria-label="Información legal">
+      <a href="[URL]">Aviso legal</a><a href="[URL]">Privacidad</a><a href="[URL]">Cookies</a>
+      <a href="[URL]">Términos y condiciones</a><a href="[URL]">Política de reembolsos</a><a href="mailto:[email]">Contacto</a>
+    </nav>
+    <p>[Titular] · [NIF/identificación fiscal] · [Domicilio] · [Email]</p>
+    <p>[Aviso del tema: "Contenido informativo; no sustituye el consejo de un profesional. Los resultados varían según cada persona."]</p>
+  </div>
+</footer>
+
+<div class="barra-movil">
+  <strong>[19 €]</strong>
+  <a class="boton" href="#ENLACE-DE-PAGO-PENDIENTE">[Lo quiero]</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "moneda": "EUR",
+  "precio": 19.0,
+  "precio_incluye_impuestos": true,
+  "tipo_impuesto": 0.21,
+  "comision_plataforma_pct": 0.0,
+  "comision_plataforma_fija": 0.0,
+  "comision_pago_pct": 0.029,
+  "comision_pago_fija": 0.30,
+  "proporcion_ventas_afiliados": 0.0,
+  "comision_afiliado_pct": 0.0,
+  "tasa_reembolso": 0.05,
+  "tasa_contracargo": 0.005,
+  "coste_contracargo": 15.0,
+  "coste_variable_por_cliente": 0.0,
+  "order_bump": {"precio": 7.0, "tasa_aceptacion": 0.20},
+  "upsell": {"precio": 39.0, "tasa_aceptacion": 0.05},
+  "costes_fijos": {"produccion_ebook": 400.0, "diseno": 150.0, "herramientas_mensuales": 40.0},
+  "periodo_meses": 2,
+  "publicidad": {"cpc": 0.55, "tasa_conversion": 0.035, "presupuesto": 600.0},
+  "supuestos": [
+    "Precio de 19 € IVA incluido: precio de ejemplo, a confirmar con el precio real en Shopify",
+    "Comisión de pago 2,9 % + 0,30 €: HIPÓTESIS; verificar la tarifa vigente de la pasarela en España",
+    "Reembolsos 5 %, aceptación del bump 20 % y del upsell 5 %: HIPÓTESIS sin datos propios",
+    "CPC 0,55 € y conversión de la landing 3,5 %: HIPÓTESIS hasta tener datos de campaña"
+  ],
+  "escenarios": {}
+}

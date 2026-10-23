@@ -1,0 +1,12 @@
+{
+  "name": "sistema-infoproductos",
+  "description": "Skills profesionales para negocios de productos digitales",
+  "owner": { "name": "rafaelnavarromendoza60-dotcom" },
+  "plugins": [
+    {
+      "name": "infoproductos",
+      "source": "./plugins/infoproductos",
+      "description": "17 skills: investigación, ideas, validación, creación, ofertas, copy, creativos, diseño, landing, email, orgánico, Meta Ads, precios, internacional, afiliados, analítica y director."
+    }
+  ]
+}

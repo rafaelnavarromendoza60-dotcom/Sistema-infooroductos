@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Título del ebook</title>
+<!-- Plantilla editorial A5. Sustituye los textos entre [corchetes] y ajusta :root a la marca.
+     Sin conexión a internet se usan las fuentes del sistema (Georgia / system-ui). -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@400;600;700&display=swap">
+<style>
+  :root {
+    --primario: #2A1033;      /* titulares y portada */
+    --acento: #FF5E62;        /* números de capítulo, detalles */
+    --acento-suave: #FFE4DE;  /* fondos de cajas */
+    --exito: #1B7F6B;         /* acciones y checks */
+    --texto: #2b2330;
+    --fondo-portada: linear-gradient(160deg, #2A1033 0%, #4E2260 100%);
+    --fuente-titulos: 'Fraunces', Georgia, serif;
+    --fuente-texto: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  @page { size: 148mm 210mm; margin: 17mm 15mm 18mm; }
+  @page portada { margin: 0; }
+  * { box-sizing: border-box; }
+  html { font-size: 11.5pt; }
+  body { margin: 0; font-family: var(--fuente-texto); color: var(--texto); line-height: 1.6; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1, h2, h3 { font-family: var(--fuente-titulos); color: var(--primario); line-height: 1.15; break-after: avoid; }
+  h1 { font-size: 2.1rem; font-weight: 900; margin: 0 0 .4em; }
+  h2 { font-size: 1.35rem; margin: 1.6em 0 .5em; }
+  h3 { font-size: 1.1rem; margin: 1.2em 0 .4em; }
+  p, li { orphans: 3; widows: 3; }
+  a { color: inherit; text-decoration: none; }
+  .salto { break-before: page; }
+
+  /* Portada */
+  .portada { page: portada; height: 210mm; width: 148mm; background: var(--fondo-portada); color: #fff; padding: 22mm 16mm; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .portada::after { content: ""; position: absolute; right: -40mm; top: -40mm; width: 110mm; height: 110mm; border-radius: 50%; background: var(--acento); opacity: .9; }
+  .portada .etiqueta { position: relative; z-index: 1; font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; opacity: .85; }
+  .portada h1 { position: relative; z-index: 1; color: #fff; font-size: 3rem; margin-top: auto; }
+  .portada .subtitulo { position: relative; z-index: 1; font-size: 1.05rem; opacity: .9; max-width: 95mm; }
+  .portada .autora { position: relative; z-index: 1; margin-top: 10mm; font-size: .85rem; opacity: .75; }
+
+  /* Páginas preliminares */
+  .legal { font-size: .8rem; color: #6b6170; }
+  .aviso { border-left: 4px solid var(--acento); background: var(--acento-suave); padding: .8em 1em; border-radius: 0 8px 8px 0; font-size: .9rem; }
+
+  /* Índice con enlaces internos (clicables en el PDF) */
+  .indice ol { list-style: none; padding: 0; counter-reset: cap; }
+  .indice li { display: flex; gap: .6em; padding: .45em 0; border-bottom: 1px dotted #d8cfdc; }
+  .indice li a { flex: 1; }
+  .indice .num { font-family: var(--fuente-titulos); color: var(--acento); font-weight: 700; min-width: 2em; }
+
+  /* Capítulos */
+  .capitulo-num { font-family: var(--fuente-titulos); font-size: 4rem; font-weight: 900; color: var(--acento); line-height: 1; margin: 0; }
+  .objetivo { background: var(--primario); color: #fff; border-radius: 10px; padding: .9em 1.1em; margin: 1em 0 1.4em; }
+  .objetivo strong { color: #FFD29A; }
+  .caja { border-radius: 10px; padding: .9em 1.1em; margin: 1.1em 0; break-inside: avoid; }
+  .ejemplo { background: #F7F0F9; }
+  .error { background: var(--acento-suave); }
+  .accion { background: #DDF5EE; border: 2px solid var(--exito); }
+  .caja .titulo-caja { display: block; font-weight: 700; margin-bottom: .3em; }
+  .resumen li::marker { color: var(--acento); }
+
+  /* Hojas de trabajo */
+  .hoja { border: 2px solid var(--primario); border-radius: 12px; padding: 1em 1.2em; break-inside: avoid; }
+  .linea { border-bottom: 1px solid #bfb3c4; height: 2.1em; }
+  .check { list-style: none; padding-left: 0; }
+  .check li::before { content: "☐  "; color: var(--exito); font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; font-size: .85rem; break-inside: avoid; }
+  th, td { border: 1px solid #d8cfdc; padding: .45em .5em; text-align: left; vertical-align: top; }
+  th { background: var(--acento-suave); color: var(--primario); }
+  .fuentes li { font-size: .82rem; margin-bottom: .4em; }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<section class="portada">
+  <span class="etiqueta">[Categoría o método]</span>
+  <h1>[Título del ebook]</h1>
+  <p class="subtitulo">[Subtítulo orientado al beneficio y al público]</p>
+  <p class="autora">[Nombre de la autora o marca]</p>
+</section>
+
+<!-- PÁGINA LEGAL Y AVISO -->
+<section class="salto">
+  <p class="legal">© [Año] [Titular]. Todos los derechos reservados. Queda prohibida la reproducción o distribución sin autorización.</p>
+  <p class="aviso"><strong>Aviso importante.</strong> [Aviso adecuado al tema: p. ej., "Este contenido es informativo y no sustituye el consejo de un profesional de la salud. Consulta con uno antes de empezar si estás embarazada, tienes lesiones, alguna enfermedad o tomas medicación. Los resultados dependen de cada persona."]</p>
+</section>
+
+<!-- ÍNDICE -->
+<section class="salto indice">
+  <h1>Índice</h1>
+  <ol>
+    <li><span class="num">—</span><a href="#intro">Introducción: cómo usar esta guía</a></li>
+    <li><span class="num">01</span><a href="#cap1">[Título del capítulo 1]</a></li>
+    <li><span class="num">02</span><a href="#cap2">[Título del capítulo 2]</a></li>
+    <li><span class="num">—</span><a href="#plan">Plan de implementación</a></li>
+    <li><span class="num">—</span><a href="#hojas">Hojas de trabajo</a></li>
+    <li><span class="num">—</span><a href="#recursos">Recursos, conclusión y próximos pasos</a></li>
+    <li><span class="num">—</span><a href="#fuentes">Fuentes</a></li>
+  </ol>
+</section>
+
+<!-- INTRODUCCIÓN -->
+<section class="salto" id="intro">
+  <h1>Introducción</h1>
+  <p>[Para quién es esta guía, qué problema resuelve y qué podrás hacer al terminarla.]</p>
+  <h2>Cómo usar esta guía</h2>
+  <p>[Orden recomendado, tiempo necesario, qué material hace falta.]</p>
+</section>
+
+<!-- CAPÍTULO (duplica este bloque para cada capítulo) -->
+<section class="salto" id="cap1">
+  <p class="capitulo-num">01</p>
+  <h1>[Título del capítulo orientado al beneficio]</h1>
+  <div class="objetivo"><strong>Objetivo:</strong> al terminar este capítulo podrás [acción concreta].</div>
+  <p>[Introducción breve que conecta con el problema del lector.]</p>
+  <h2>[Concepto 1]</h2>
+  <p>[Explicación clara; una idea por párrafo.]</p>
+  <div class="caja ejemplo"><span class="titulo-caja">Ejemplo</span>[Caso concreto del público objetivo.]</div>
+  <div class="caja error"><span class="titulo-caja">Error frecuente</span>[Qué hace mal la mayoría y cómo evitarlo.]</div>
+  <div class="caja accion"><span class="titulo-caja">Tu acción de hoy (10 min)</span>[Ejercicio específico.]</div>
+  <h3>Resumen</h3>
+  <ul class="resumen"><li>[Punto clave 1]</li><li>[Punto clave 2]</li><li>[Punto clave 3]</li></ul>
+</section>
+
+<section class="salto" id="cap2">
+  <p class="capitulo-num">02</p>
+  <h1>[Título del capítulo 2]</h1>
+  <div class="objetivo"><strong>Objetivo:</strong> [acción concreta].</div>
+  <p>[Contenido.]</p>
+</section>
+
+<!-- PLAN DE IMPLEMENTACIÓN -->
+<section class="salto" id="plan">
+  <h1>Plan de implementación</h1>
+  <table>
+    <tr><th>Semana</th><th>Lunes</th><th>Miércoles</th><th>Viernes</th><th>Fin de semana</th></tr>
+    <tr><td>1</td><td>[acción]</td><td>[acción]</td><td>[acción]</td><td>[revisión]</td></tr>
+    <tr><td>2</td><td>[acción]</td><td>[acción]</td><td>[acción]</td><td>[revisión]</td></tr>
+  </table>
+</section>
+
+<!-- HOJAS DE TRABAJO -->
+<section class="salto" id="hojas">
+  <h1>Hojas de trabajo</h1>
+  <div class="hoja">
+    <h3>[Nombre de la hoja: p. ej., Mi punto de partida]</h3>
+    <p>[Pregunta 1]</p><div class="linea"></div><div class="linea"></div>
+    <p>[Pregunta 2]</p><div class="linea"></div><div class="linea"></div>
+    <ul class="check"><li>[Tarea comprobable 1]</li><li>[Tarea comprobable 2]</li></ul>
+  </div>
+</section>
+
+<!-- RECURSOS, CONCLUSIÓN Y PRÓXIMOS PASOS -->
+<section class="salto" id="recursos">
+  <h1>Recursos y próximos pasos</h1>
+  <h2>Recursos adicionales</h2>
+  <ul><li>[Herramienta o lectura y para qué sirve]</li></ul>
+  <h2>Conclusión</h2>
+  <p>[Qué ha conseguido el lector y cómo mantenerlo.]</p>
+  <h2>Tu siguiente paso</h2>
+  <p>[Acción concreta; si procede, presentación útil del siguiente producto.]</p>
+</section>
+
+<!-- FUENTES -->
+<section class="salto" id="fuentes">
+  <h1>Fuentes</h1>
+  <ol class="fuentes"><li>[Autor u organismo. Título. Editorial o web, año. Enlace.]</li></ol>
+</section>
+
+</body>
+</html>

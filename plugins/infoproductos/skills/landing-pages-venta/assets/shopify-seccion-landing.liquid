@@ -1,0 +1,205 @@
+{%- comment -%}
+  Sección de landing para infoproductos (Shopify Online Store 2.0).
+  Instalación: Tienda online > Temas > ... > Editar código > sections > Añadir sección
+  "landing-infoproducto" y pegar este archivo. Después, en el editor de temas, añádela a una
+  plantilla de página o de producto y configura el producto, los textos y los bloques.
+  Si se elige un producto, el botón añade la primera variante disponible y lleva al checkout.
+{%- endcomment -%}
+
+{%- liquid
+  assign producto = section.settings.producto
+  assign variante = producto.selected_or_first_available_variant
+-%}
+
+<section class="lp-{{ section.id }}" aria-labelledby="lp-titulo-{{ section.id }}">
+  <div class="lp-contenedor">
+    <div class="lp-hero">
+      <div>
+        {%- if section.settings.antetitulo != blank -%}<p class="lp-eyebrow">{{ section.settings.antetitulo }}</p>{%- endif -%}
+        <h1 id="lp-titulo-{{ section.id }}" class="lp-h1">{{ section.settings.titulo }}</h1>
+        {%- if section.settings.subtitulo != blank -%}<div class="lp-sub">{{ section.settings.subtitulo }}</div>{%- endif -%}
+
+        {%- if producto != blank -%}
+          <p class="lp-precio">
+            {{ variante.price | money }}
+            {%- if variante.compare_at_price > variante.price -%}<s>{{ variante.compare_at_price | money }}</s>{%- endif -%}
+          </p>
+          {%- form 'product', producto -%}
+            <input type="hidden" name="id" value="{{ variante.id }}">
+            <input type="hidden" name="return_to" value="/checkout">
+            <button type="submit" class="lp-boton" {% unless variante.available %}disabled{% endunless %}>
+              {%- if variante.available -%}{{ section.settings.texto_boton }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+            </button>
+          {%- endform -%}
+        {%- elsif section.settings.enlace_boton != blank -%}
+          <a class="lp-boton" href="{{ section.settings.enlace_boton }}">{{ section.settings.texto_boton }}</a>
+        {%- elsif request.design_mode -%}
+          <p class="lp-aviso">Elige un producto o un enlace de pago en la configuración de la sección.</p>
+        {%- endif -%}
+        {%- if section.settings.microcopy != blank -%}<p class="lp-micro">{{ section.settings.microcopy }}</p>{%- endif -%}
+      </div>
+      {%- if section.settings.imagen != blank -%}
+        {{ section.settings.imagen | image_url: width: 1200 | image_tag: loading: 'eager', class: 'lp-imagen', sizes: '(min-width: 860px) 50vw, 100vw', widths: '400, 800, 1200' }}
+      {%- endif -%}
+    </div>
+
+    {%- assign beneficios = section.blocks | where: 'type', 'beneficio' -%}
+    {%- if beneficios.size > 0 -%}
+      <h2 class="lp-h2">{{ section.settings.titulo_beneficios }}</h2>
+      <div class="lp-rejilla">
+        {%- for block in beneficios -%}
+          <div class="lp-tarjeta" {{ block.shopify_attributes }}>
+            <h3>{{ block.settings.titulo }}</h3>
+            <p>{{ block.settings.texto }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- assign incluye = section.blocks | where: 'type', 'incluye' -%}
+    {%- if incluye.size > 0 -%}
+      <h2 class="lp-h2">{{ section.settings.titulo_incluye }}</h2>
+      <ul class="lp-check">
+        {%- for block in incluye -%}<li {{ block.shopify_attributes }}><strong>{{ block.settings.titulo }}</strong> {{ block.settings.texto }}</li>{%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- assign testimonios = section.blocks | where: 'type', 'testimonio' -%}
+    {%- if testimonios.size > 0 -%}
+      <h2 class="lp-h2">{{ section.settings.titulo_testimonios }}</h2>
+      <div class="lp-rejilla">
+        {%- for block in testimonios -%}
+          <figure class="lp-tarjeta" {{ block.shopify_attributes }}>
+            <blockquote>“{{ block.settings.cita }}”</blockquote>
+            <figcaption>{{ block.settings.autor }}</figcaption>
+          </figure>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.garantia != blank -%}
+      <div class="lp-garantia">{{ section.settings.garantia }}</div>
+    {%- endif -%}
+
+    {%- assign faqs = section.blocks | where: 'type', 'faq' -%}
+    {%- if faqs.size > 0 -%}
+      <h2 class="lp-h2">Preguntas frecuentes</h2>
+      {%- for block in faqs -%}
+        <details class="lp-faq" {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.pregunta }}</summary>
+          <div>{{ block.settings.respuesta }}</div>
+        </details>
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if section.settings.aviso_legal != blank -%}<p class="lp-micro lp-legal">{{ section.settings.aviso_legal }}</p>{%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  .lp-{{ section.id }} { --lp-acento: {{ section.settings.color_acento }}; --lp-texto: {{ section.settings.color_texto }}; background: {{ section.settings.color_fondo }}; color: var(--lp-texto); padding: 48px 0 72px; }
+{% endstyle %}
+
+{% stylesheet %}
+  [class^="lp-"] .lp-contenedor { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .lp-hero { display: grid; gap: 32px; align-items: center; margin-bottom: 48px; }
+  @media (min-width: 860px) { .lp-hero { grid-template-columns: 1.1fr 1fr; } }
+  .lp-eyebrow { font-size: .8rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--lp-acento); margin: 0 0 8px; }
+  .lp-h1 { font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.08; margin: 0 0 16px; }
+  .lp-h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); text-align: center; margin: 56px 0 24px; }
+  .lp-sub { font-size: 1.12rem; opacity: .85; }
+  .lp-precio { font-size: 2rem; font-weight: 800; margin: 16px 0 12px; }
+  .lp-precio s { font-size: 1.1rem; font-weight: 400; opacity: .6; margin-left: 8px; }
+  .lp-boton { display: inline-block; min-height: 52px; padding: 16px 34px; border: 0; border-radius: 999px; background: var(--lp-acento); color: #fff; font-weight: 700; font-size: 1.1rem; text-decoration: none; cursor: pointer; }
+  .lp-boton:disabled { opacity: .5; cursor: not-allowed; }
+  .lp-boton:focus-visible { outline: 3px solid var(--lp-texto); outline-offset: 3px; }
+  .lp-micro { font-size: .88rem; opacity: .75; margin-top: 12px; }
+  .lp-imagen { width: 100%; height: auto; border-radius: 20px; }
+  .lp-rejilla { display: grid; gap: 16px; }
+  @media (min-width: 750px) { .lp-rejilla { grid-template-columns: repeat(3, 1fr); } }
+  .lp-tarjeta { background: rgba(255,255,255,.7); border: 1px solid rgba(0,0,0,.08); border-radius: 18px; padding: 22px; margin: 0; }
+  .lp-check { list-style: none; padding: 0; max-width: 720px; margin: 0 auto; }
+  .lp-check li { padding: 10px 0 10px 32px; position: relative; border-bottom: 1px solid rgba(0,0,0,.08); }
+  .lp-check li::before { content: "✓"; position: absolute; left: 0; color: var(--lp-acento); font-weight: 700; }
+  .lp-garantia { max-width: 720px; margin: 48px auto 0; padding: 22px; border-radius: 18px; background: rgba(27,127,107,.12); }
+  .lp-faq { max-width: 720px; margin: 0 auto 10px; background: rgba(255,255,255,.7); border-radius: 14px; padding: 14px 18px; }
+  .lp-faq summary { cursor: pointer; font-weight: 700; }
+  .lp-legal { max-width: 720px; margin: 40px auto 0; text-align: center; }
+  .lp-aviso { padding: 12px; border: 2px dashed currentColor; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Landing infoproducto",
+  "tag": "div",
+  "class": "seccion-landing-infoproducto",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "antetitulo", "label": "Antetítulo (para quién es)", "default": "Para mujeres que entrenan en casa" },
+    { "type": "text", "id": "titulo", "label": "Titular", "default": "Titular con el resultado principal" },
+    { "type": "richtext", "id": "subtitulo", "label": "Subtítulo", "default": "<p>Qué es, cómo funciona y qué lo hace distinto.</p>" },
+    { "type": "image_picker", "id": "imagen", "label": "Imagen o mockup" },
+    { "type": "header", "content": "Compra" },
+    { "type": "product", "id": "producto", "label": "Producto (el botón lleva al checkout)" },
+    { "type": "url", "id": "enlace_boton", "label": "Enlace de pago externo (si no eliges producto)" },
+    { "type": "text", "id": "texto_boton", "label": "Texto del botón", "default": "Quiero empezar" },
+    { "type": "text", "id": "microcopy", "label": "Microcopy bajo el botón", "default": "Pago seguro · Acceso inmediato por email" },
+    { "type": "header", "content": "Títulos de bloques" },
+    { "type": "text", "id": "titulo_beneficios", "label": "Título de beneficios", "default": "Lo que vas a conseguir" },
+    { "type": "text", "id": "titulo_incluye", "label": "Título de qué incluye", "default": "Qué incluye" },
+    { "type": "text", "id": "titulo_testimonios", "label": "Título de testimonios", "default": "Lo que dicen quienes ya lo usan" },
+    { "type": "header", "content": "Garantía y avisos" },
+    { "type": "richtext", "id": "garantia", "label": "Garantía (solo si coincide con tu política real)" },
+    { "type": "richtext", "id": "aviso_legal", "label": "Aviso (salud, finanzas, resultados)", "default": "<p>Contenido informativo; no sustituye el consejo de un profesional. Los resultados varían según cada persona.</p>" },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "color_acento", "label": "Acento (botones)", "default": "#D63A48" },
+    { "type": "color", "id": "color_texto", "label": "Texto", "default": "#2A1033" },
+    { "type": "color", "id": "color_fondo", "label": "Fondo", "default": "#FFF8F3" }
+  ],
+  "blocks": [
+    {
+      "type": "beneficio",
+      "name": "Beneficio",
+      "settings": [
+        { "type": "text", "id": "titulo", "label": "Título", "default": "Beneficio concreto" },
+        { "type": "textarea", "id": "texto", "label": "Texto", "default": "Qué significa para la clienta." }
+      ]
+    },
+    {
+      "type": "incluye",
+      "name": "Qué incluye",
+      "settings": [
+        { "type": "text", "id": "titulo", "label": "Elemento", "default": "Módulo 1" },
+        { "type": "text", "id": "texto", "label": "Descripción", "default": "Qué aprenderás o conseguirás" }
+      ]
+    },
+    {
+      "type": "testimonio",
+      "name": "Testimonio (solo reales)",
+      "settings": [
+        { "type": "paragraph", "content": "Usa solo testimonios reales, con permiso de la persona." },
+        { "type": "textarea", "id": "cita", "label": "Cita" },
+        { "type": "text", "id": "autor", "label": "Nombre y contexto" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Pregunta frecuente",
+      "settings": [
+        { "type": "text", "id": "pregunta", "label": "Pregunta", "default": "¿Cómo recibo el producto?" },
+        { "type": "richtext", "id": "respuesta", "label": "Respuesta", "default": "<p>Recibirás un email con el acceso justo después del pago.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing infoproducto",
+      "blocks": [
+        { "type": "beneficio" }, { "type": "beneficio" }, { "type": "beneficio" },
+        { "type": "incluye" }, { "type": "incluye" },
+        { "type": "faq" }, { "type": "faq" }
+      ]
+    }
+  ]
+}
+{% endschema %}
